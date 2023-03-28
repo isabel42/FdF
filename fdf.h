@@ -26,9 +26,10 @@ int		ft_totalloop(char *buf);
 char	*ft_loopbuf(int looprep, char *buf);
 char	*get_next_line(int fd);
 char	*ft_testret(char *line, int ret, char *buf, int limit);
-void	ft_free(char *s);
+void	ft_free_cc(char **s);
 
 int		ft_countrow(char *argv);
+int		**ft_input(char *argv);
 int		main(int argc, char **argv);
 
 #endif

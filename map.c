@@ -74,41 +74,17 @@ int	ft_countcolum(char *argv)
 	return (j);
 }
 
-char	**ft_input(char *argv)
-{
-	char	**input;
-	int		row;
-	int		i;
-	int		fd;
-
-	i = 0;
-	row = ft_countrow(argv);
-	input = ft_calloc(sizeof(input), row);
-	fd = open(argv, O_RDONLY);
-	if (fd == -1)
-		exit (0);
-	while (i < row)
-	{
-		input[i] = get_next_line(fd);
-		i++;
-	}
-	return (input);
-}
-
-int	**ft_map(char **input, char *argv)
+int	**ft_map(char **input, int **map)
 {
 	int	i;
 	int	j;
 	int	k;
 	int	result;
-	int	**map;
 
 	i = 0;
 	k = 0;
-	map = ft_calloc(ft_countrow(argv), sizeof(map));
 	while (input[i])
 	{
-		map[i] = ft_calloc(ft_countcolum(argv), sizeof(map));
 		j = 0;
 		while (input[i][j] == '\n')
 		{
@@ -126,3 +102,33 @@ int	**ft_map(char **input, char *argv)
 	}
 	return (map);
 }
+
+int	**ft_input(char *argv)
+{
+	char	**input;
+	int		**map;
+	int		row;
+	int		i;
+	int		fd;
+
+	i = 0;
+	row = ft_countrow(argv);
+	input = ft_calloc(sizeof(input), row);
+	map = ft_calloc(sizeof(map), row);
+	fd = open(argv, O_RDONLY);
+	if (fd == -1)
+		exit (0);
+	printf("row: %d\n", row);
+	while (i < row)
+	{
+	//printf("gnl: %s", get_next_line(fd));
+		//input[i] = get_next_line(fd);
+		map[i] = ft_calloc(ft_countcolum(argv), sizeof(map));
+		i++;
+	}
+	//map = ft_map(input, map);
+	//ft_free_cc(input);
+	return (map);
+}
+
+

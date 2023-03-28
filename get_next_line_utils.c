@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:09:38 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/03/28 15:51:30 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/03/28 19:31:11 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,20 @@ char	*ft_testret(char *line, int ret, char *buf, int limit)
 	if (ret < limit)
 	{
 		buf[0] = '\0';
-		ft_free(line);
+		free(line);
 		return (NULL);
 	}
 	return (line);
 }
 
-void	ft_free(char *s)
+void	ft_free_cc(char **s)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (i < ft_strlen(s))
+	while (s[i])
 	{
-		s[i] = '\0';
+		free(s[i]);
 		i++;
 	}
 	free(s);

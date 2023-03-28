@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:09:15 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/03/28 15:54:15 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/03/28 19:32:12 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*ft_loopbuf(int looprep, char *buf)
 	temp = get_until_nl(buf, looprep);
 	if (ft_strlen(temp) == 0)
 	{
-		ft_free(temp);
+		free(temp);
 		return (NULL);
 	}
 	return (temp);
@@ -121,7 +121,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	temp = get_until_nl(buf, 0);
 	line = ft_strjoin(line, temp);
-	ft_free(temp);
+	free(temp);
 	looprep = 0;
 	return (line);
 }
