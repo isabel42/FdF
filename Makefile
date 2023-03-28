@@ -1,38 +1,46 @@
-SRCS	= main.c 
+SRCS	= main.c \
+			map.c \
+			get_next_line_utils.c \
+			get_next_line.c    
 
 OBJS 	= ${SRCS:.c=.o}
 
 NAME 	= fdf
 
-LIB		= libfdf.a
+FT_NAME = ./libft/libft.a
+
+MLX_NAME = ./minilibx/libmlx.a
 
 CC		= gcc
 
 RM		= rm -f
 
-AR		= ar rc
-
 CFLAGS	= -Wextra -Wall -Werror
+
+INCLUDE = -I./libft/ -I./minilibx/ -I.
 
 .c.o:	
 			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-${NAME}: 	${OBJS}
-				make bonus -C ./libft
-				make -C ./minilibx
-				cp ./libft/libft.a ${LIB}
-				cp ./minilibx/libmlx.a ${LIB}
-				${AR} ${LIB} ${OBJS}
-				ranlib ${LIB}
-			${CC} ${CFLAGS} -o ${NAME} main.c -L. -lfdf -framework OpenGL -framework AppKit -lm
+${NAME}: 	${OBJS} ${FT_NAME} ${MLX_NAME}
+			${CC} ${CFLAGS} ${INCLUDE} ${OBJS} -o ${NAME} -L./minilibx/ -lmlx -L./libft/ -lft -framework OpenGL -framework AppKit -lm
 
 all:		${NAME}
 
+${FT_NAME}:
+	make bonus -C ./libft/
+
+${MLX_NAME}:
+	make -C ./minilibx
+
 clean:
-			make fclean -C ./libft	
+			make clean -C ./libft
+			make clean -C ./minilibx	
 			${RM} ${OBJS}
 
 fclean: 	clean
+			make fclean -C ./libft
+			${RM} ${MLX_NAME}
 			${RM} ${NAME}
 
 re:			fclean all

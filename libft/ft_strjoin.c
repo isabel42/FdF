@@ -6,13 +6,13 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 17:28:22 by itovar-n          #+#    #+#             */
-/*   Updated: 2022/10/31 17:49:38 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/03/28 15:55:25 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	len_s1;
 	size_t	len_s2;
@@ -35,5 +35,6 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		sol[i] = s2[i - len_s1];
 		i++;
 	}
+	free(s1);
 	return (sol);
 }
