@@ -13,18 +13,7 @@
 
 # include "fdf.h"
 
-typedef struct	s_data_img {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data_img;
 
-typedef struct	s_vars {
-	void	*mlx;
-	void	*win;
-}				t_vars;
 
 int ft_abs(int i)
 {
@@ -109,13 +98,16 @@ int	main(int argc, char **argv)
 {
 	// t_vars		vars;
 	// t_data_img	img;
-	int		**map;
+	t_input		*data;
+	// char **input;
 
-	
 	if(argc != 2)
 		return(0);
-	map = ft_input(argv[1]);
-	printf("map 00: %d\n", map[0][0]);
+	data = ft_data(argv[1]);
+	// printf("input 00: %s\n", input[10]);
+	// map = ft_map(input);
+	printf("map 00: %d\n", data->map[4][3]);
+	printf("ascii nl: %d\n", '\n');
 // 	vars.mlx = mlx_init();
 // 	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
 // 	img.img = mlx_new_image(vars.mlx, 1920, 1080);

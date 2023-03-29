@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*																			*/
-/*														:::	  ::::::::   */
-/*   map.c											  :+:	  :+:	:+:   */
-/*													+:+ +:+		 +:+	 */
-/*   By: itovar-n <marvin@42lausanne.ch>			+#+  +:+	   +#+		*/
-/*												+#+#+#+#+#+   +#+		   */
-/*   Created: 2023/03/28 17:47:51 by itovar-n		  #+#	#+#			 */
-/*   Updated: 2023/03/28 18:29:27 by itovar-n		 ###   ########.fr	   */
-/*																			*/
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
+/*   Updated: 2023/03/29 20:07:37 by itovar-n         ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
@@ -23,6 +23,7 @@ int	ft_countrow(char *argv)
 	if (fd == -1)
 		exit (0);
 	line = get_next_line(fd);
+	printf("line: %s\n", line);
 	if (line == NULL)
 		exit(0);
 	while (line)
@@ -74,61 +75,70 @@ int	ft_countcolum(char *argv)
 	return (j);
 }
 
-int	**ft_map(char **input, int **map)
+t_input	*ft_data(char *argv)
 {
 	int	i;
-	int	j;
-	int	k;
-	int	result;
+	t_input	*data;
+
+	data = malloc(sizeof(data, argv));
+	if (!data)
+		exit(0);
+	ft_data_create(data, argv);
 
 	i = 0;
-	k = 0;
-	while (input[i])
+	while (data->input[i])
 	{
-		j = 0;
-		while (input[i][j] == '\n')
-		{
-			if (input[i][j] > 47 && input[i][j] < 58)
-				result = result * 10 + input[i][j] + 48;
-			else
-				result = 0;
-			j++;
-			if (input[i][j] == '\n' || input[i][j] < 48 || input[i][j] > 57)
-			{
-				map[i][k] = result;
-				k++;
-			}
-		}
+		ft_data_alloc_line(data->input[i], data->map[i], 0, 0);
+		i++;
 	}
-	return (map);
+	return (data);
 }
 
-int	**ft_input(char *argv)
+t_input	*ft_data_create(t_input *data, char *argv)
 {
-	char	**input;
-	int		**map;
-	int		row;
 	int		i;
 	int		fd;
 
 	i = 0;
-	row = ft_countrow(argv);
-	input = ft_calloc(sizeof(input), row);
-	map = ft_calloc(sizeof(map), row);
+	data->row = ft_countrow(argv);
+	data->column = ft_countcolum(argv);
+	data->input = ft_calloc(sizeof(data->input), data->row);
+	data->map = malloc(sizeof(data->map) * data->row);
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
 		exit (0);
-	printf("row: %d\n", row);
-	while (i < row)
+	while (i < data->row)
 	{
-	//printf("gnl: %s", get_next_line(fd));
-		//input[i] = get_next_line(fd);
-		map[i] = ft_calloc(ft_countcolum(argv), sizeof(map));
+		data->input[i] = get_next_line(fd);
+		data->map[i] = ft_calloc(data->column, sizeof(data->map));
 		i++;
 	}
-	//map = ft_map(input, map);
-	//ft_free_cc(input);
-	return (map);
+	close(fd);
+	return (data);
 }
 
+void	ft_data_alloc_line(char *input, int *map, int j, int k)
+{
+	int	result;
+	int	a;
 
+	result = 0;
+	a = 1;
+	while (input[j] != '\n')
+	{
+		if (input[j] > 47 && input[j] < 58)
+		{
+			a = 0;
+			result = result * 10 + (input[j] - 48);
+		}
+		else
+			result = 0;
+		j++;
+		if ((input[j] < 48 || input[j] > 57) && a == 0)
+		{
+			a = 1;
+			map[k] = result;
+			k++;
+		}
+	}
+}

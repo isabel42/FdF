@@ -20,6 +20,28 @@
 # include "minilibx/mlx.h"
 # include "libft/libft.h"
 
+
+
+typedef struct	s_data_img {
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}				t_data_img;
+
+typedef struct	s_vars {
+	void	*mlx;
+	void	*win;
+}				t_vars;
+
+typedef struct	s_input {
+	char	**input;
+	int		**map;
+	int		row;
+	int		column;
+}				t_input;
+
 char	*get_until_nl(char *s, int loopret);
 char	*ft_get_line(char *line, char *buf, int fd);
 int		ft_totalloop(char *buf);
@@ -29,7 +51,11 @@ char	*ft_testret(char *line, int ret, char *buf, int limit);
 void	ft_free_cc(char **s);
 
 int		ft_countrow(char *argv);
-int		**ft_input(char *argv);
+int	ft_countcolum(char *argv);
+t_input	*ft_data_create(t_input *data, char *argv);
+t_input	*ft_data(char *argv);
+void ft_data_alloc_line(char *input, int *map, int j, int k);
+
 int		main(int argc, char **argv);
 
 #endif
