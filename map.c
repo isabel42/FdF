@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/03/29 20:07:37 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/03/29 20:12:00 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	ft_countrow(char *argv)
 	if (fd == -1)
 		exit (0);
 	line = get_next_line(fd);
-	printf("line: %s\n", line);
 	if (line == NULL)
 		exit(0);
 	while (line)
@@ -77,15 +76,14 @@ int	ft_countcolum(char *argv)
 
 t_input	*ft_data(char *argv)
 {
-	int	i;
+	int		i;
 	t_input	*data;
 
+	i = 0;
 	data = malloc(sizeof(data, argv));
 	if (!data)
 		exit(0);
 	ft_data_create(data, argv);
-
-	i = 0;
 	while (data->input[i])
 	{
 		ft_data_alloc_line(data->input[i], data->map[i], 0, 0);

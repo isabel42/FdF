@@ -29,6 +29,7 @@ int	close_w(int keycode, t_vars *vars)
 	exit(0);
 	return (0);
 }
+
 void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color)
 {
 	char	*dst;
@@ -82,7 +83,7 @@ void tracerSegment(t_data_img *img, int x1, int y1, int x2, int y2)
 	{
 		while(y1 <= y2)
 		{
-			my_mlx_pixel_put(img, x1, y1, 0x0000FF00);
+			my_mlx_pixel_put(img, x1, y1, 0x000000FF);
 			y1 = y1 + 1 ;  // colonne du pixel suivant
 			if ((ey = ey - dx) <= 0) // erreur pour le pixel suivant de même rangée
 			{
@@ -96,27 +97,25 @@ void tracerSegment(t_data_img *img, int x1, int y1, int x2, int y2)
 
 int	main(int argc, char **argv)
 {
-	// t_vars		vars;
-	// t_data_img	img;
-	t_input		*data;
-	// char **input;
+	t_vars		vars;
+	t_data_img	img;
+	// t_input		*data;
 
 	if(argc != 2)
 		return(0);
-	data = ft_data(argv[1]);
-	// printf("input 00: %s\n", input[10]);
-	// map = ft_map(input);
-	printf("map 00: %d\n", data->map[4][3]);
-	printf("ascii nl: %d\n", '\n');
-// 	vars.mlx = mlx_init();
-// 	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
-// 	img.img = mlx_new_image(vars.mlx, 1920, 1080);
-// 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
+	printf("argv 1: %s\n", argv[1]);
+	printf("pi: %f\n", M_PI);
+	// data = ft_data(argv[1]);
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
+	img.img = mlx_new_image(vars.mlx, 1920, 1080);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	
-// 	tracerSegment(&img, 50, 100, 25, 10);
-// 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+	ft_printline(&img);//, data);
+	// tracerSegment(&img, 50, 100, 25, 10);
+	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 
-// 	mlx_hook(vars.win, 17, 0, close_w, &vars);
-// 	mlx_hook(vars.win, 2, 0, close_w, &vars);
-// 	mlx_loop(vars.mlx);
+	mlx_hook(vars.win, 17, 0, close_w, &vars);
+	mlx_hook(vars.win, 2, 0, close_w, &vars);
+	mlx_loop(vars.mlx);
 }
