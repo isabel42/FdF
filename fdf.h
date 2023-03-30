@@ -42,6 +42,11 @@ typedef struct	s_input {
 	int		column;
 }				t_input;
 
+typedef struct	s_iso {
+	int		x;
+	int		y;
+}				t_iso;
+
 char	*get_until_nl(char *s, int loopret);
 char	*ft_get_line(char *line, char *buf, int fd);
 int		ft_totalloop(char *buf);
@@ -56,7 +61,7 @@ t_input	*ft_data_create(t_input *data, char *argv);
 t_input	*ft_data(char *argv);
 void ft_data_alloc_line(char *input, int *map, int j, int k);
 
-void ft_printline(t_data_img *img);//, t_input *data);
+void ft_printline(t_data_img *img, t_input *data);
 
 void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 void tracerSegment(t_data_img *img, int x1, int y1, int x2, int y2);

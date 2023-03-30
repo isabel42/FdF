@@ -99,21 +99,22 @@ int	main(int argc, char **argv)
 {
 	t_vars		vars;
 	t_data_img	img;
-	// t_input		*data;
+	t_input		*data;
 
 	if(argc != 2)
 		return(0);
 	printf("argv 1: %s\n", argv[1]);
 	printf("pi: %f\n", M_PI);
-	// data = ft_data(argv[1]);
+	data = ft_data(argv[1]);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
 	img.img = mlx_new_image(vars.mlx, 1920, 1080);
+	// img.line_length = 1;
+	img.endian = 1;
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	
-	ft_printline(&img);//, data);
-	// tracerSegment(&img, 50, 100, 25, 10);
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+	ft_printline(&img, data);
+	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 1920/2, 1080/2);
 
 	mlx_hook(vars.win, 17, 0, close_w, &vars);
 	mlx_hook(vars.win, 2, 0, close_w, &vars);
