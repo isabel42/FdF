@@ -6,57 +6,67 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/03/30 15:39:18 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/03 13:28:06 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_iso	*ft_iso(int x, int y, int z)
+t_iso	**ft_iso(t_input *data)
 {
-	t_iso *coord;
-
-	coord = malloc (sizeof(coord) * 1);
-	if (!coord)
-		exit(0);
-	coord->x = (x - y) * cos(30 / (180 * M_PI));
-	coord->y = (-z + x + y) * sin (30 / (180 * M_PI));
-	return (coord);
-}
-
-
-void ft_printline(t_data_img *img, t_input *data)
-{
+	t_iso **iso;
 	int i;
 	int j;
+	float alpha = 30 * (M_PI / 180);
+	float beta =  45 * (M_PI / 180);
 
-	t_iso *start;
-	t_iso *end;
-	t_iso *end_end;
 	i = 0;
-	while(i < data->column)
-	{
+	iso = malloc (sizeof(iso) * data->row);
+	if (!iso)
+		exit(0);
+	while (i < data->row)
+	{ 
+		iso[i] = malloc (sizeof(iso) *  data->column[i]);
+		if (!iso)
+			exit(0);
 		j = 0;
-		while(j < data->row)
+		while (j <  data->column[i])
 		{
-			if(i < data->column -1)
-			{
-				start = ft_iso(i + (20 * i), j + (20 * j), data->map[j][i]);
-				end = ft_iso((i + 1) + (20 * (i + 1)), j + (20 * j), data->map[j][i + 1]);
-				tracerSegment(img, i + (20 * i), j + (20 * j), (i + 1) + (20 * (i + 1)), j + (20 * j));
-				free(start);
-				free(end);
-			}
-			if(j < data->row -1 )
-			{
-				start = ft_iso(i + (20 * i), j + (20 * j), data->map[j][i]);
-				end_end = ft_iso(i + (20 * i), (j + 1) + (20 * (j + 1)), data->map[j][i + 1]);
-				tracerSegment(img, i + (20 * i), j + (20 * j), i + (20 * i), (j + 1) + (20 * (j + 1)));
-				free(start);
-			}
+			iso[i][j].x = (j * cos(beta) + data->map[i][j] * sin(beta)) * 10;
+			iso[i][j].y= (-j * sin (alpha) * sin(beta) + i * cos(alpha) + data->map[i][j] * sin(alpha) * cos(beta)) * 10 ;
 			j++;
 		}
 		i++;
 	}
-	my_mlx_pixel_put(img, 0, 0, 0x00FF0000);
+	return (iso);
 }
+
+t_iso *ft_is_min(t_iso **iso, t_input *data)
+{
+
+	int i;
+	int j;
+	t_iso *min;
+
+	i = 0;
+	min = malloc(sizeof(min) * 1);
+	if(!min)
+		exit(0);
+	*min = iso[0][0];
+	while(i < data->row)
+	{
+		j = 0;
+		while(j < data->column[i])
+		{
+			if(iso[i][j].x < min->x)
+				iso[i][j].x = min->x;
+			if(iso[i][j].y < min->y)
+				iso[i][j].y = min->y;
+			j++;
+		}
+		i++;
+	}
+	return (min);
+}
+
+
