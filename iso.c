@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/04 09:47:55 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/04 18:19:52 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ t_iso	**ft_iso(t_input *data)
 	t_iso **iso;
 	int i;
 	int j;
-	float alpha = 45 * (M_PI / 180);
-	float beta = 30 * (M_PI / 180);
+	float alpha = 60 * (M_PI / 180);
+	float beta = -45 * (M_PI / 180);
+	int zoom = 1;
 
 	i = 0;
 	iso = malloc (sizeof(iso) * data->row);
@@ -32,8 +33,8 @@ t_iso	**ft_iso(t_input *data)
 		j = 0;
 		while (j <  data->column[i])
 		{
-			iso[i][j].x = j * cos(beta) + data->map[i][j] * sin(beta);
-			iso[i][j].y= -j * sin (alpha) * sin(beta) + i * cos(alpha) + data->map[i][j] * sin(alpha) * cos(beta) ;
+			iso[i][j].x =  zoom * (j * cos(beta) + i * sin(beta));
+			iso[i][j].y= zoom * (-j * sin (alpha) * sin(beta)) - data->map[i][j] * cos(alpha) + zoom * i * sin(alpha) * cos(beta) ;
 			j++;
 		}
 		i++;
