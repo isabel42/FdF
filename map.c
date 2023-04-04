@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/03/30 21:19:10 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/03 14:58:35 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	ft_countcolum_line(char *line)
 			a = 1;
 		i++;
 	}
-	//free(line);
 	return (j);
 }
 

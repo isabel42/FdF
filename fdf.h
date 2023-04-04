@@ -48,8 +48,6 @@ typedef struct	s_iso {
 }				t_iso;
 
 typedef struct s_bresen {
-	// int	dX;
-	// int	dY;
 	int	IncXi;
 	int	IncYi;
 	int	IncXr;
@@ -74,5 +72,8 @@ void ft_data_alloc_line(char *input, int *map, int j, int k);
 void	my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 void tracer_segment(t_data_img *img, int x1, int y1, int x2, int y2);
 int		main(int argc, char **argv);
+
+t_iso	**ft_iso(t_input *data);
+t_iso *ft_is_min(t_iso **iso, t_input *data);
 
 #endif

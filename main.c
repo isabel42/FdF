@@ -112,17 +112,15 @@ void	tracer_segment(t_data_img *img, int x1, int y1, int x2, int y2)
 	avi = (av - trace_segment_dx(x1, y1, x2, y2));
 	while ((x1 != x2 && param->IncXr != 0) || (y1 != y2 && param->IncYr != 0))
 	{
-		printf("x1: %d - y1: %d - avr: %d", x1, y1, avr);
+		// printf("x1: %d - y1: %d - avr: %d\n", x1, y1, avr);
 		my_mlx_pixel_put(img, x1, y1, 0x00FFFFFF);
 		if (av >= 0)
 		{
 			x1 = (x1 + param->IncXi);
 			y1 = (y1 + param->IncYi);
 			av = (av + avi);
-		printf("*\n");
 			continue ;
 		}
-		printf("+\n");
 		x1 = (x1 + param->IncXr);
 		y1 = (y1 + param->IncYr);
 		av = (av + avr);
@@ -134,16 +132,20 @@ int	main(int argc, char **argv)
 {
 	t_vars		vars;
 	t_data_img	img;
-	// t_input		*data;
+	t_input		*data;
+	t_iso		**iso;
+	t_iso		*min;
+	int			zoom;
+	int			i = 0;
+	int			j;
 
 	if(argc != 2)
 		return(0);
 	
-	printf("argv 1: %s\n", argv[1]);
-	printf("pi: %f\n", M_PI);
-	
-	
-	// data = ft_data(argv[1]);
+	data = ft_data(argv[1]);
+	iso = ft_iso(data);
+	min = ft_is_min(iso, data);
+	zoom = 30;
 	
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
@@ -151,10 +153,34 @@ int	main(int argc, char **argv)
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
 	
 	// ft_printline(&img, data);
+	// tracer_segment(&img, (iso[0][0].x - min->x) * zoom, (iso[0][0].y - min->y)*zoom, (iso[10][0].x - min->x) *zoom, (iso[10][0].y - min->y) *zoom );
+	// tracer_segment(&img, (iso[10][0].x - min->x) * zoom, (iso[10][0].y - min->y)*zoom, (iso[10][10].x - min->x) *zoom, (iso[10][10].y - min->y) *zoom );
+	// tracer_segment(&img, (iso[10][10].x - min->x) * zoom, (iso[10][10].y - min->y)*zoom, (iso[0][10].x - min->x) *zoom, (iso[0][10].y - min->y) *zoom );
+	// tracer_segment(&img, (iso[0][10].x - min->x) * zoom, (iso[0][10].y - min->y)*zoom, (iso[0][0].x - min->x) *zoom, (iso[0][0].y - min->y) *zoom );
 
-	tracer_segment(&img, 500, 0, 0, 127);
-	// tracer_segment(&img, 127, 500, 0, 0);
+	while (i < data->row - 1)
+	{
+		j = 0;
+		while(j < data->column[i] - 1)
+		{
+			tracer_segment(&img, (iso[i][j].x - min->x) * zoom, (iso[i][j].y - min->y)*zoom, (iso[i][j + 1].x - min->x) *zoom, (iso[i][j + 1].y - min->y) *zoom );
+			if(i < data->row - 2)
+				tracer_segment(&img, (iso[i][j].x - min->x) * zoom, (iso[i][j].y - min->y)*zoom, (iso[i + 1][j].x - min->x) *zoom, (iso[i + 1][j].y - min->y) *zoom );
+			if(j == data->column[i] - 2 && i < data->row - 2)
+				tracer_segment(&img, (iso[i][j].x - min->x) * zoom, (iso[i][j].y - min->y)*zoom, (iso[i][j + 1].x - min->x) *zoom, (iso[i][j + 1].y - min->y) *zoom );
+			j++;
+		}
+		i++;
+	}
 
+	printf("iso 0-0.x: %f\n", iso[0][0].x);
+	printf("iso 0-0.y: %f\n", iso[0][0].y  -min->y);
+	printf("iso 10-0.x: %f\n", iso[10][0].x * 5);
+	printf("iso 10-0.y: %f\n", (iso[10][0].y -min->y) * 5);
+	printf("iso 10-10.x: %f\n",(iso[10][10].x * 5));
+	printf("iso 10-10.y: %f\n", (iso[10][10].y -min->y) * 5);
+	printf("iso 0-10.x: %f\n", iso[0][10].x * 5);
+	printf("iso 0-10.y: %f\n", (iso[0][10].y -min->y) * 5);
 	my_mlx_pixel_put(&img, 0, 0, 0x000000FF);
 
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 1920/4, 1080/4);
