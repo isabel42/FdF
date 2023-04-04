@@ -112,7 +112,6 @@ void	tracer_segment(t_data_img *img, int x1, int y1, int x2, int y2)
 	avi = (av - trace_segment_dx(x1, y1, x2, y2));
 	while ((x1 != x2 && param->IncXr != 0) || (y1 != y2 && param->IncYr != 0))
 	{
-		// printf("x1: %d - y1: %d - avr: %d\n", x1, y1, avr);
 		my_mlx_pixel_put(img, x1, y1, 0x00FFFFFF);
 		if (av >= 0)
 		{
@@ -145,7 +144,7 @@ int	main(int argc, char **argv)
 	data = ft_data(argv[1]);
 	iso = ft_iso(data);
 	min = ft_is_min(iso, data);
-	zoom = 30;
+	zoom = 1;
 	
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
@@ -161,12 +160,12 @@ int	main(int argc, char **argv)
 	while (i < data->row)
 	{
 		j = 0;
-		while(j < data->column[i] - 1)
+		while(j < data->column - 1)
 		{
 			tracer_segment(&img, (iso[i][j].x - min->x) * zoom, (iso[i][j].y - min->y)*zoom, (iso[i][j + 1].x - min->x) *zoom, (iso[i][j + 1].y - min->y) *zoom );
 			if(i < data->row - 1)
 				tracer_segment(&img, (iso[i][j].x - min->x) * zoom, (iso[i][j].y - min->y)*zoom, (iso[i + 1][j].x - min->x) *zoom, (iso[i + 1][j].y - min->y) *zoom );
-			if(j == data->column[i] - 2 && i < data->row - 1)
+			if(j == data->column - 2 && i < data->row - 1)
 				tracer_segment(&img, (iso[i][j + 1].x - min->x) * zoom, (iso[i][j + 1].y - min->y)*zoom, (iso[i + 1][j + 1].x - min->x) *zoom, (iso[i + 1][j + 1].y - min->y) *zoom );
 			j++;
 		}

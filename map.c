@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/04 18:28:11 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/04 18:32:42 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	ft_countrow(char *argv)
 		line = get_next_line(fd);
 		i++;
 	}
+	free(line);
 	close (fd);
 	return (i);
 }
@@ -58,27 +59,19 @@ int	ft_countcolum_line(char *line)
 	return (j);
 }
 
-int	*ft_countcolum(char *argv)
+int	ft_countcolum(char *argv)
 {
 	char	*line;
 	int		fd;
-	int		*column;
+	int		column;
 	int		i;
 
 	i = 0;
-	column = malloc(sizeof(column)* ft_countrow(argv));
-	if (!column)
-		exit(0);
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
 		exit (0);
 	line = get_next_line(fd);
-	while(line)
-	{
-		column[i] = ft_countcolum_line(line);
-		line = get_next_line(fd);
-		i++;
-	}
+	column = ft_countcolum_line(line);
 	free(line);
 	close(fd);
 	return (column);
@@ -118,7 +111,7 @@ t_input	*ft_data_create(t_input *data, char *argv)
 	while (i < data->row)
 	{
 		data->input[i] = get_next_line(fd);
-		data->map[i] = ft_calloc(data->column[i], sizeof(data->map));
+		data->map[i] = ft_calloc(data->column, sizeof(data->map));
 		i++;
 	}
 	close(fd);

@@ -39,7 +39,7 @@ typedef struct	s_input {
 	char	**input;
 	int		**map;
 	int		row;
-	int		*column;
+	int		column;
 }				t_input;
 
 typedef struct	s_iso {
@@ -63,7 +63,7 @@ char	*ft_testret(char *line, int ret, char *buf, int limit);
 void	ft_free_cc(char **s);
 
 int		ft_countrow(char *argv);
-int	*ft_countcolum(char *argv);
+int	ft_countcolum(char *argv);
 t_input	*ft_data_create(t_input *data, char *argv);
 t_input	*ft_data(char *argv);
 void ft_data_alloc_line(char *input, int *map, int j, int k);
