@@ -33,8 +33,7 @@ int	main(int argc, char **argv)
 	t_data_img	img;
 	t_input		*data;
 	t_point		**iso;
-	t_point		*min;
-	int			zoom;
+	// t_point		*min;
 	int			i = 0;
 	int			j;
 
@@ -43,9 +42,8 @@ int	main(int argc, char **argv)
 	
 	data = ft_data(argv[1]);
 	iso = ft_iso_pos(data);
-	min = ft_is_min(iso, data);
-	printf("xxx min.x: %f, min.y: %f\n", min->x, min->y);
-	zoom = 1;
+	// min = ft_is_min(iso, data);
+	//printf("xxx min.x: %f, min.y: %f\n", min->x, min->y);
 	
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
@@ -59,17 +57,18 @@ int	main(int argc, char **argv)
 	// tracer_segment(&img, (iso[0][10].x - min->x) * zoom, (iso[0][10].y - min->y)*zoom, (iso[0][0].x - min->x) *zoom, (iso[0][0].y - min->y) *zoom );
 
 
-	printf("is i j: %f - %f\n", iso[0][0].x, iso[0][0].y);
+	//printf("is i j: %f - %f\n", iso[0][0].x, iso[0][0].y);
+
 	while (i < data->row)
 	{
 		j = 0;
 		while(j < data->column - 1)
 		{
-			tracer_segment(&img, iso[i][j].x  * zoom, iso[i][j].y * zoom, iso[i][j + 1].x * zoom, iso[i][j + 1].y *zoom);
+			tracer_segment(&img, iso[i][j], iso[i][j + 1]);
 			if(i < data->row - 1)
-				tracer_segment(&img, iso[i][j].x * zoom, iso[i][j].y * zoom, iso[i + 1][j].x * zoom, iso[i + 1][j].y * zoom);
+				tracer_segment(&img, iso[i][j], iso[i + 1][j]);
 			if(j == data->column - 2 && i < data->row - 1)
-				tracer_segment(&img, iso[i][j + 1].x * zoom, iso[i][j + 1].y * zoom, iso[i + 1][j + 1].x * zoom, iso[i + 1][j + 1].y *zoom );
+				tracer_segment(&img, iso[i][j + 1], iso[i + 1][j + 1]);
 			j++;
 		}
 		i++;

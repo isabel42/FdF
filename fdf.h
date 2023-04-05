@@ -41,8 +41,8 @@ typedef struct s_input {
 }				t_input;
 
 typedef struct s_point {
-	float		x;
-	float		y;
+	int		x;
+	int		y;
 }				t_point;
 
 typedef struct s_bresen {
@@ -76,7 +76,7 @@ void		my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 t_bresen	*trace_segment_param(int x1, int y1, int x2, int y2);
 int			trace_segment_dx(int x1, int y1, int x2, int y2);
 int			trace_segment_dy(int x1, int y1, int x2, int y2);
-void		tracer_segment(t_data_img *img, int x1, int y1, int x2, int y2);
+void		tracer_segment(t_data_img *img, t_point one, t_point two);
 
 int			ft_abs(int a);
 int			close_w(int keycode, t_vars *vars);
