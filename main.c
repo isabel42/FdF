@@ -32,8 +32,8 @@ int	main(int argc, char **argv)
 	t_vars		vars;
 	t_data_img	img;
 	t_input		*data;
-	t_iso		**iso;
-	t_iso		*min;
+	t_point		**iso;
+	t_point		*min;
 	int			zoom;
 	int			i = 0;
 	int			j;

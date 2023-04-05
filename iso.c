@@ -6,20 +6,20 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/05 10:19:59 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/05 11:20:50 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_iso	**ft_iso(t_input *data)
+t_point	**ft_iso(t_input *data)
 {
-	t_iso	**iso;
+	t_point	**iso;
 	int		i;
 	int		j;
 	float	a = 45 * (M_PI / 180);
 	float	b = -30 * (M_PI / 180);
-	int		z = 30;
+	int		z = 5;
 
 	i = 0;
 	iso = malloc (sizeof(iso) * data->row);
@@ -43,11 +43,11 @@ t_iso	**ft_iso(t_input *data)
 	return (iso);
 }
 
-t_iso	*ft_is_min(t_iso **iso, t_input *data)
+t_point	*ft_is_min(t_point **iso, t_input *data)
 {
 	int		i;
 	int		j;
-	t_iso	*min;
+	t_point	*min;
 
 	i = 0;
 	min = malloc(sizeof(min) * 1);
@@ -71,11 +71,11 @@ t_iso	*ft_is_min(t_iso **iso, t_input *data)
 	return (min);
 }
 
-t_iso	*ft_is_max(t_iso **iso, t_input *data)
+t_point	*ft_is_max(t_point **iso, t_input *data)
 {
 	int		i;
 	int		j;
-	t_iso	*max;
+	t_point	*max;
 
 	i = 0;
 	max = malloc(sizeof(max) * 1);
@@ -99,10 +99,10 @@ t_iso	*ft_is_max(t_iso **iso, t_input *data)
 	return (max);
 }
 
-t_iso	**ft_iso_pos(t_input *data)
+t_point	**ft_iso_pos(t_input *data)
 {
-	t_iso	*min;
-	t_iso	**iso;
+	t_point	*min;
+	t_point	**iso;
 	int		i;
 	int		j;
 
