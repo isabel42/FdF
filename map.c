@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/04 18:32:42 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/05 10:21:21 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ int	ft_countcolum(char *argv)
 	char	*line;
 	int		fd;
 	int		column;
-	int		i;
 
-	i = 0;
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
 		exit (0);
@@ -75,24 +73,6 @@ int	ft_countcolum(char *argv)
 	free(line);
 	close(fd);
 	return (column);
-}
-
-t_input	*ft_data(char *argv)
-{
-	int		i;
-	t_input	*data;
-
-	i = 0;
-	data = malloc(sizeof(data, argv));
-	if (!data)
-		exit(0);
-	ft_data_create(data, argv);
-	while (i < data->row)
-	{
-		ft_data_alloc_line(data->input[i], data->map[i], 0, 0);
-		i++;
-	}
-	return (data);
 }
 
 t_input	*ft_data_create(t_input *data, char *argv)
@@ -142,4 +122,22 @@ void	ft_data_alloc_line(char *input, int *map, int j, int k)
 			k++;
 		}
 	}
+}
+
+t_input	*ft_data(char *argv)
+{
+	int		i;
+	t_input	*data;
+
+	i = 0;
+	data = malloc(sizeof(data, argv));
+	if (!data)
+		exit(0);
+	ft_data_create(data, argv);
+	while (i < data->row)
+	{
+		ft_data_alloc_line(data->input[i], data->map[i], 0, 0);
+		i++;
+	}
+	return (data);
 }
