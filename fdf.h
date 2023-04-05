@@ -40,10 +40,10 @@ typedef struct s_input {
 	int		column;
 }				t_input;
 
-typedef struct s_iso {
+typedef struct s_point {
 	float		x;
 	float		y;
-}				t_iso;
+}				t_point;
 
 typedef struct s_bresen {
 	int	incxi;
@@ -61,10 +61,10 @@ char		*get_next_line(int fd);
 char		*ft_testret(char *line, int ret, char *buf, int limit);
 void		ft_free_cc(char **s);
 
-t_iso		**ft_iso(t_input *data);
-t_iso		*ft_is_min(t_iso **iso, t_input *data);
-t_iso		*ft_is_max(t_iso **iso, t_input *data);
-t_iso		**ft_iso_pos(t_input *data);
+t_point		**ft_iso(t_input *data);
+t_point		*ft_is_min(t_point **iso, t_input *data);
+t_point		*ft_is_max(t_point **iso, t_input *data);
+t_point		**ft_iso_pos(t_input *data);
 
 int			ft_countrow(char *argv);
 int			ft_countcolum(char *argv);

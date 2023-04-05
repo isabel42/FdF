@@ -58,6 +58,8 @@ int	main(int argc, char **argv)
 	// tracer_segment(&img, (iso[10][10].x - min->x) * zoom, (iso[10][10].y - min->y)*zoom, (iso[0][10].x - min->x) *zoom, (iso[0][10].y - min->y) *zoom );
 	// tracer_segment(&img, (iso[0][10].x - min->x) * zoom, (iso[0][10].y - min->y)*zoom, (iso[0][0].x - min->x) *zoom, (iso[0][0].y - min->y) *zoom );
 
+
+	printf("is i j: %f - %f\n", iso[0][0].x, iso[0][0].y);
 	while (i < data->row)
 	{
 		j = 0;
