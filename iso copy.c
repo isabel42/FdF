@@ -6,83 +6,60 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/06 16:31:29 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/06 15:36:54 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-float	ft_zoom(t_point **iso, t_input *data)
+float	ft_z_zoom(t_input *data)
 {
-	t_point	*min;
-	t_point	*max;
-	t_point	*size;
-	float		zoom;
-
-	min = ft_is_min(iso, data);
-	max = ft_is_max(iso, data);
-	zoom = 1;
-	size = malloc(sizeof(size) * 1);
-	if (!size)
-		exit(0);
-	size->x = ft_abs(max->x - min->x);
-	size->y = ft_abs(max->y - min->y);
-	printf("size.y: %d\n", size->y);
-	zoom = 900 / size->x;
-	if(zoom > 1500 / size->y)
-		zoom = 1500 / size->y;
-	free(min);
-	free(max);
-	free(size);
-	return(zoom);
-}
-
-t_point	**ft_iso_single(t_input *data)
-{
-	t_point	**iso;
 	int		i;
 	int		j;
-	float	a = 45 * (M_PI / 180);
-	float	b = -30 * (M_PI / 180);
-	int		z = 1;
+	float 	max;
+	float	z_zoom;
 
 	i = 0;
-	iso = malloc (sizeof(iso) * data->row);
-	if (!iso)
-		exit(0);
-	while (i < data->row)
+	max = 0;
+	while(i < data->row)
 	{
-		iso[i] = malloc (sizeof(iso) * data->column);
-		if (!iso)
-			exit(0);
 		j = 0;
-		while (j < data->column)
+		while(j < data->column)
 		{
-			iso[i][j].x = z * (j * cos(b) + i * sin(b));
-			iso[i][j].y = z  * (-j * sin (a) * sin(b))
-				- data->map[i][j] * cos(a) + z * i * sin(a) * cos(b);
+			if(ft_abs(data->map[i][j]) > max)
+				max = ft_abs(data->map[i][j]);
 			j++;
 		}
 		i++;
 	}
-	return (iso);
+	z_zoom = i / max;
+	if(z_zoom > j / max)
+		z_zoom = j / max;
+	return(z_zoom);
+}
+
+ void ft_iso_line(int i, t_input *data, t_point *iso, float z_zoom)
+{
+	int j;
+
+	j = 0;
+	while (j < data->column)
+	{
+		iso[j].x = (j * cos(data->beta) + i * sin(data->beta));
+		iso[j].y = (-j * sin (data->alpha) * sin(data->beta))
+			- z_zoom * data->map[i][j] * cos(data->alpha) + i * sin(data->alpha) * cos(data->beta);
+		j++;
+	}
+
 }
 
 t_point	**ft_iso(t_input *data)
 {
 	t_point	**iso;
-	t_point	**iso_single;
 	int		i;
 	int		j;
-	float	a = 45 * (M_PI / 180);
-	float	b = -30 * (M_PI / 180);
-	int		z;
 
 	i = 0;
-	iso_single = ft_iso_single(data);
-	z = ft_zoom(iso_single, data);
-	printf("zoom calc: %f\n", ft_zoom(iso_single, data));
-	// z = 15;
 	iso = malloc (sizeof(iso) * data->row);
 	if (!iso)
 		exit(0);
@@ -94,9 +71,9 @@ t_point	**ft_iso(t_input *data)
 		j = 0;
 		while (j < data->column)
 		{
-			iso[i][j].x = z * (j * cos(b) + i * sin(b));
-			iso[i][j].y = z  * (-j * sin (a) * sin(b))
-				- data->map[i][j] * cos(a) + z * i * sin(a) * cos(b);
+			iso[i][j].x = (j * cos(data->beta) + i * sin(data->beta));
+			iso[i][j].y = (-j * sin (data->alpha) * sin(data->beta))
+				- data->map[i][j] * cos(data->alpha) + i * sin(data->alpha) * cos(data->beta);
 			j++;
 		}
 		i++;
@@ -160,30 +137,61 @@ t_point	*ft_is_max(t_point **iso, t_input *data)
 	return (max);
 }
 
-t_point	**ft_iso_pos(t_input *data)
+float	ft_zoom(t_point **iso, t_input *data)
 {
 	t_point	*min;
+	t_point	*max;
+	t_point	*size;
+	float		zoom;
+
+	min = ft_is_min(iso, data);
+	max = ft_is_max(iso, data);
+	size = malloc(sizeof(size) * 1);
+	if (!size)
+		exit(0);
+	size->x = ft_abs(max->x - min->x);
+	size->y = ft_abs(max->y - min->y);
+	zoom = 1500 / size->x;
+	if(zoom > 900 / size->y)
+		zoom = 900 / size->y;
+	free(min);
+	free(max);
+	free(size);
+	printf("zoom: %f\n", zoom);
+	return(zoom);
+}
+
+t_point	**ft_iso_pos(t_input *data)
+{
 	t_point	**iso;
+	t_point	**iso_pos;
+	t_point	*min;
+	float	zoom;
 	int		i;
 	int		j;
 
+	i = 0;
 	iso = ft_iso(data);
 	min = ft_is_min(iso, data);
-	printf("min.x min y: %d, %d\n", min->x, min->y);
-
-	i = 0;
+	zoom = 1; //ft_zoom(iso, data);
+	iso_pos = malloc (sizeof(iso_pos) * data->row);
+	if (!iso_pos)
+		exit(0);
 	while (i < data->row)
 	{
+		iso_pos[i] = malloc (sizeof(iso_pos) * data->column);
+		if (!iso_pos)
+			exit(0);
 		j = 0;
 		while (j < data->column)
 		{
-			iso[i][j].x = iso[i][j].x - min->x;
-			iso[i][j].y = iso[i][j].y - min->y;
+			iso_pos[i][j].x = zoom * (j * cos(data->beta) + i * sin(data->beta) - min->x);
+			iso_pos[i][j].y = zoom * ((-j * sin (data->alpha) * sin(data->beta)
+				-  data->map[i][j] * cos(data->alpha) + zoom * i * sin(data->alpha) * cos(data->beta)) - min->y);
 			j++;
 		}
 		i++;
 	}
-	printf("iso00: %d, %d\n", iso[0][0].x, iso[0][0].y);
-	free(min);
-	return (iso);
+	printf("i: %d - j: %d\n", i, j);
+	return (iso_pos);
 }
