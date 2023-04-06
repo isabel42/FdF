@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/05 15:24:55 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/06 11:53:39 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,12 @@ int	ft_countcolum(char *argv)
 	if (fd == -1)
 		exit (0);
 	line = get_next_line(fd);
-	column = ft_countcolum_line(line);
+	while(line)
+	{
+		column = ft_countcolum_line(line);
+		free(line);
+		line = get_next_line(fd);
+	}
 	free(line);
 	close(fd);
 	return (column);
