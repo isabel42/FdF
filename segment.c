@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/05 12:27:39 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/05 14:33:18 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,6 @@ void	tracer_segment(t_data_img *img, t_point start, t_point end)
 	avi = (av - trace_segment_dx(one.x, one.y, two.x, two.y));
 	while ((one.x != two.x && param->incxr != 0) || (one.y != two.y && param->incyr != 0))
 	{
-	printf("one.x: %d - ", one.x);
-	printf("one.y: %d\n", one.y);
 		my_mlx_pixel_put(img, one.x, one.y, 0x00FFFFFF);
 		if (av >= 0)
 		{

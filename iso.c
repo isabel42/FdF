@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/05 12:27:48 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:26:58 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_point	**ft_iso(t_input *data)
 	int		j;
 	float	a = 45 * (M_PI / 180);
 	float	b = -30 * (M_PI / 180);
-	int		z = 5;
+	int		z = 30;
 
 	i = 0;
 	iso = malloc (sizeof(iso) * data->row);
@@ -34,12 +34,14 @@ t_point	**ft_iso(t_input *data)
 		while (j < data->column)
 		{
 			iso[i][j].x = z * (j * cos(b) + i * sin(b));
-			iso[i][j].y = z * (-j * sin (a) * sin(b))
+			iso[i][j].y = z  * (-j * sin (a) * sin(b))
 				- data->map[i][j] * cos(a) + z * i * sin(a) * cos(b);
 			j++;
 		}
 		i++;
 	}
+	printf("data00: %d\n", data->map[0][0]);
+	printf("iso00: %d, %d\n", iso[0][0].x, iso[0][0].y);
 	return (iso);
 }
 
@@ -108,6 +110,8 @@ t_point	**ft_iso_pos(t_input *data)
 
 	iso = ft_iso(data);
 	min = ft_is_min(iso, data);
+	printf("min.x min y: %d, %d\n", min->x, min->y);
+
 	i = 0;
 	while (i < data->row)
 	{
@@ -120,6 +124,7 @@ t_point	**ft_iso_pos(t_input *data)
 		}
 		i++;
 	}
+	printf("iso00: %d, %d\n", iso[0][0].x, iso[0][0].y);
 	free(min);
 	return (iso);
 }

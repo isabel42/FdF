@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/05 10:21:21 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/05 15:24:55 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,29 +98,27 @@ t_input	*ft_data_create(t_input *data, char *argv)
 	return (data);
 }
 
-void	ft_data_alloc_line(char *input, int *map, int j, int k)
+void	ft_data_alloc_line(char *input, int *map)
 {
-	int	result;
-	int	a;
+	int a;
+	int k;
 
-	result = 0;
 	a = 1;
-	while (input[j] && input[j] != '\n')
+	k = 0;
+	while (input[0] && input[0] != '\n')
 	{
-		if (input[j] > 47 && input[j] < 58)
+		if ((input[0] > 47 && input[0] < 58) || input[0] == '-') 
 		{
+			if(a == 1)
+			{
+				map[k] = ft_atoi(input);
+				k++;
+			}
 			a = 0;
-			result = result * 10 + (input[j] - 48);
 		}
 		else
-			result = 0;
-		j++;
-		if ((!input[j] || (input[j] < 48 || input[j] > 57)) && a == 0)
-		{
 			a = 1;
-			map[k] = result;
-			k++;
-		}
+		input++;
 	}
 }
 
@@ -136,7 +134,7 @@ t_input	*ft_data(char *argv)
 	ft_data_create(data, argv);
 	while (i < data->row)
 	{
-		ft_data_alloc_line(data->input[i], data->map[i], 0, 0);
+		ft_data_alloc_line(data->input[i], data->map[i]);
 		i++;
 	}
 	return (data);

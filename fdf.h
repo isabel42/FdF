@@ -69,7 +69,7 @@ t_point		**ft_iso_pos(t_input *data);
 int			ft_countrow(char *argv);
 int			ft_countcolum(char *argv);
 t_input		*ft_data_create(t_input *data, char *argv);
-void		ft_data_alloc_line(char *input, int *map, int j, int k);
+void		ft_data_alloc_line(char *input, int *map);
 t_input		*ft_data(char *argv);
 
 void		my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
