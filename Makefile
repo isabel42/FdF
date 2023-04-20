@@ -3,7 +3,8 @@ SRCS	= main.c \
 			iso.c \
 			get_next_line_utils.c \
 			get_next_line.c  \
-			segment.c
+			segment.c \
+			zoom.c
 
 OBJS 	= ${SRCS:.c=.o}
 
