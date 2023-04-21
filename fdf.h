@@ -38,6 +38,10 @@ typedef struct s_input {
 	int		**map;
 	int		row;
 	int		column;
+	float	a;
+	float	b;
+	int		zoom;
+	float		zoom_z;
 }				t_input;
 
 typedef struct s_point {
@@ -80,6 +84,11 @@ void		tracer_segment(t_data_img *img, t_point one, t_point two);
 
 int			ft_abs(int a);
 int			close_w(int keycode, t_vars *vars);
+void		ft_image(t_input *data, t_data_img img);
 int			main(int argc, char **argv);
+
+t_point		**ft_iso_single(t_input *data);
+float		ft_zoom(t_input *data);
+float		ft_zoom_z(t_input *data);
 
 #endif

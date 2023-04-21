@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/06 11:53:39 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/21 04:09:31 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,16 @@ int	ft_countrow(char *argv)
 	i = 0;
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
+	{
+		perror("Error");
 		exit (0);
+	}
 	line = get_next_line(fd);
 	if (line == NULL)
+	{
+		ft_putstr_fd("File is empty!! \n", 1);
 		exit(0);
+	}
 	while (line)
 	{
 		free(line);
@@ -67,7 +73,10 @@ int	ft_countcolum(char *argv)
 
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
+	{
+		perror("Error");
 		exit (0);
+	}
 	line = get_next_line(fd);
 	while(line)
 	{
@@ -90,9 +99,14 @@ t_input	*ft_data_create(t_input *data, char *argv)
 	data->column = ft_countcolum(argv);
 	data->input = ft_calloc(sizeof(data->input), data->row);
 	data->map = malloc(sizeof(data->map) * data->row);
+	data->a = 45 * (M_PI / 180);
+	data->b = -30 * (M_PI / 180);
 	fd = open(argv, O_RDONLY);
 	if (fd == -1)
+	{
+		perror("Error");
 		exit (0);
+	}
 	while (i < data->row)
 	{
 		data->input[i] = get_next_line(fd);
@@ -142,5 +156,7 @@ t_input	*ft_data(char *argv)
 		ft_data_alloc_line(data->input[i], data->map[i]);
 		i++;
 	}
+	data->zoom = ft_zoom(data);
+	data->zoom_z = ft_zoom_z(data);
 	return (data);
 }

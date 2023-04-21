@@ -27,56 +27,49 @@ int	close_w(int keycode, t_vars *vars)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+void	ft_image(t_input *data, t_data_img img)
 {
-	t_vars		vars;
-	t_data_img	img;
-	t_input		*data;
 	t_point		**iso;
-	// t_point		*min;
-	int			i = 0;
+	int			i;
 	int			j;
 
-	if(argc != 2)
-		return(0);
-	
-	data = ft_data(argv[1]);
 	iso = ft_iso_pos(data);
-	// min = ft_is_min(iso, data);
-	//printf("xxx min.x: %f, min.y: %f\n", min->x, min->y);
-	
-	vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
-	img.img = mlx_new_image(vars.mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-	
-	// ft_printline(&img, data);
-	// tracer_segment(&img, (iso[0][0].x - min->x) * zoom, (iso[0][0].y - min->y)*zoom, (iso[10][0].x - min->x) *zoom, (iso[10][0].y - min->y) *zoom );
-	// tracer_segment(&img, (iso[10][0].x - min->x) * zoom, (iso[10][0].y - min->y)*zoom, (iso[10][10].x - min->x) *zoom, (iso[10][10].y - min->y) *zoom );
-	// tracer_segment(&img, (iso[10][10].x - min->x) * zoom, (iso[10][10].y - min->y)*zoom, (iso[0][10].x - min->x) *zoom, (iso[0][10].y - min->y) *zoom );
-	// tracer_segment(&img, (iso[0][10].x - min->x) * zoom, (iso[0][10].y - min->y)*zoom, (iso[0][0].x - min->x) *zoom, (iso[0][0].y - min->y) *zoom );
-
-
-	//printf("is i j: %f - %f\n", iso[0][0].x, iso[0][0].y);
-
+	i = 0;
 	while (i < data->row)
 	{
 		j = 0;
-		while(j < data->column - 1)
+		while (j < data->column - 1)
 		{
 			tracer_segment(&img, iso[i][j], iso[i][j + 1]);
-			if(i < data->row - 1)
+			if (i < data->row - 1)
 				tracer_segment(&img, iso[i][j], iso[i + 1][j]);
-			if(j == data->column - 2 && i < data->row - 1)
+			if (j == data->column - 2 && i < data->row - 1)
 				tracer_segment(&img, iso[i][j + 1], iso[i + 1][j + 1]);
 			j++;
 		}
 		i++;
 	}
-	my_mlx_pixel_put(&img, 0, 0, 0x000000FF);
+}
 
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 1920/4, 1080/4);
+int	main(int argc, char **argv)
+{
+	t_input		*data;
+	t_vars		vars;
+	t_data_img	img;
 
+	if (argc != 2)
+	{
+		ft_putstr_fd("Incorrect number of aguments\n", 1);
+		return (0);
+	}
+	data = ft_data(argv[1]);
+	vars.mlx = mlx_init();
+	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!");
+	img.img = mlx_new_image(vars.mlx, 1920, 1080);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
+			&img.line_length, &img.endian);
+	ft_image(data, img);
+	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 210, 90);
 	mlx_hook(vars.win, 17, 0, close_w, &vars);
 	mlx_hook(vars.win, 2, 0, close_w, &vars);
 	mlx_loop(vars.mlx);
