@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/21 03:42:46 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/23 02:36:35 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ t_point	**ft_iso(t_input *data)
 		while (j < data->column)
 		{
 			iso[i][j].x = data->zoom * (j * cos(data->b) + i * sin(data->b));
-			iso[i][j].y = data->zoom  * (-j * sin (data->a) * sin(data->b))
-				- data->zoom_z * data->map[i][j] * cos(data->a) + data->zoom * i * sin(data->a) * cos(data->b);
+			iso[i][j].y = data->zoom * (-j * sin (data->a) * sin(data->b))
+				- data->zoom_z * data->map[i][j] * cos(data->a)
+				+ data->zoom * i * sin(data->a) * cos(data->b);
 			j++;
 		}
 		i++;

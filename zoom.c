@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   zoom.c                                              :+:      :+:    :+:   */
+/*   zoom.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/06 17:24:21 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/04/23 02:55:50 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ t_point	**ft_iso_single(t_input *data)
 		{
 			iso[i][j].x = (j * cos(data->b) + i * sin(data->b));
 			iso[i][j].y = (-j * sin (data->a) * sin(data->b))
-				- 0 * data->map[i][j] * cos(data->a) + i * sin(data->a) * cos(data->b);
+				- 0 * data->map[i][j] * cos(data->a) + i
+				* sin(data->a) * cos(data->b);
 			j++;
 		}
 		i++;
@@ -57,7 +58,7 @@ float	ft_zoom(t_input *data)
 	size->x = ft_abs(max->x - min->x);
 	size->y = ft_abs(max->y - min->y);
 	zoom = 1500 / size->x;
-	if(zoom > 900 / size->y)
+	if (zoom > 900 / size->y)
 		zoom = 900 / size->y;
 	if (zoom > 40)
 		zoom = 40;
@@ -65,7 +66,7 @@ float	ft_zoom(t_input *data)
 	free(max);
 	free(size);
 	free(iso_single);
-	return(zoom);
+	return (zoom);
 }
 
 float	ft_zoom_z(t_input *data)
@@ -76,10 +77,10 @@ float	ft_zoom_z(t_input *data)
 
 	i = 0;
 	max = 0;
-	while(i < data->row)
+	while (i < data->row)
 	{
 		j = 0;
-		while(j < data->column)
+		while (j < data->column)
 		{
 			if (ft_abs(data->map[i][j]) > max)
 				max = ft_abs(data->map[i][j]);

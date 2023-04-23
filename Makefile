@@ -1,9 +1,11 @@
 SRCS	= main.c \
 			map.c \
+			map_column.c \
 			iso.c \
 			get_next_line_utils.c \
 			get_next_line.c  \
 			segment.c \
+			tracer_segment.c \
 			zoom.c
 
 OBJS 	= ${SRCS:.c=.o}
