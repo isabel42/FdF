@@ -34,7 +34,6 @@ typedef struct s_vars {
 }				t_vars;
 
 typedef struct s_input {
-	char	**input;
 	int		**map;
 	int		row;
 	int		column;
@@ -70,6 +69,8 @@ char		*get_next_line(int fd);
 
 char		*ft_testret(char *line, int ret, char *buf, int limit);
 void		ft_free_cc(char **s);
+void		ft_free_ii(int **s, int j);
+void		ft_free_data(t_input *data);
 
 t_point		**ft_iso(t_input *data);
 t_point		*ft_is_min(t_point **iso, t_input *data);
@@ -77,13 +78,15 @@ t_point		*ft_is_max(t_point **iso, t_input *data);
 t_point		**ft_iso_pos(t_input *data);
 
 void		ft_exit(int fd);
+char		**ft_start_malloc();
 int			ft_countcolum_line(char *line);
-int			ft_countcolum(char *argv);
+int			ft_countrow(char **input);
 
-int			ft_countrow(char *argv);
-t_input		*ft_data_create(t_input *data, char *argv);
-void		ft_data_alloc_line(char *input, int *map);
+char		**ft_readinput(char *argv);
+char		**ft_cc_c_join(char **cc, char *c, int i);
 t_input		*ft_data(char *argv);
+int			**ft_map(char **input);
+void		ft_data_alloc_line(char *input, int *map);
 
 void		my_mlx_pixel_put(t_data_img *data, int x, int y, int color);
 t_bresen	*trace_segment_param(int x1, int y1, int x2, int y2);
@@ -96,7 +99,6 @@ void		tracer_segment(t_data_img *img, t_point one, t_point two);
 int			ft_abs(int a);
 int			close_w(int keycode, t_vars *vars);
 void		ft_image(t_input *data, t_data_img img);
-int			main(int argc, char **argv);
 
 t_point		**ft_iso_single(t_input *data);
 float		ft_zoom(t_input *data);

@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/23 02:52:44 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:11:56 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@ void	ft_exit(int fd)
 		perror("Error");
 		exit (0);
 	}
+}
+
+char	**ft_start_malloc()
+{
+	char	**sol;
+
+	sol = malloc(sizeof(sol));
+	if (!sol)
+		exit(0);
+	sol[0] = malloc(sizeof(sol));
+	if (!sol[0])
+		exit(0);
+	return(sol);
 }
 
 int	ft_countcolum_line(char *line)
@@ -44,22 +57,29 @@ int	ft_countcolum_line(char *line)
 	return (j);
 }
 
-int	ft_countcolum(char *argv)
+int	ft_countrow(char **input)
 {
-	char	*line;
-	int		fd;
-	int		column;
+	int	i;
+	int	j;
 
-	fd = open(argv, O_RDONLY);
-	ft_exit(fd);
-	line = get_next_line(fd);
-	while (line)
+	i = 0;
+	j = 0;
+	while (input[i][j] && input[i][j] != '\0')
 	{
-		column = ft_countcolum_line(line);
-		free(line);
-		line = get_next_line(fd);
+		if(input[i][j] == '\n')
+		{
+			j = 0;
+			if(!input[i + 1][j])
+			{
+				i++;
+				return(i);
+			}
+			i++;
+		}
+		j++;
 	}
-	free(line);
-	close(fd);
-	return (column);
+	return (i);
 }
+
+
+

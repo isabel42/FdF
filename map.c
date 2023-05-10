@@ -6,60 +6,109 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/23 02:52:24 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/10 18:18:32 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_countrow(char *argv)
+char	**ft_readinput(char *argv)
 {
-	int		fd;
+	char	**sol;
 	char	*line;
+	int		fd;
 	int		i;
 
 	i = 0;
 	fd = open(argv, O_RDONLY);
 	ft_exit(fd);
 	line = get_next_line(fd);
-	if (line == NULL)
+	if (!line)
 	{
-		ft_putstr_fd("File is empty!! \n", 1);
+		ft_putstr_fd("Input file is empty!\n", 1);
 		exit(0);
 	}
+	sol = ft_start_malloc();
 	while (line)
 	{
-		free(line);
+		sol = ft_cc_c_join(sol, line, i);
 		line = get_next_line(fd);
 		i++;
 	}
-	free(line);
-	close (fd);
-	return (i);
+	close(fd);
+	return (sol);
 }
 
-t_input	*ft_data_create(t_input *data, char *argv)
+char	**ft_cc_c_join(char **cc, char *c, int i)
 {
-	int		i;
-	int		fd;
+	char	**sol;
+	char	*nul;
+	int		j;
 
-	i = 0;
-	data->row = ft_countrow(argv);
-	data->column = ft_countcolum(argv);
-	data->input = ft_calloc(sizeof(data->input), data->row);
-	data->map = malloc(sizeof(data->map) * data->row);
+	j = 0;
+	sol = malloc(sizeof(sol) * (i + 2));
+	if (!sol)
+		exit(0);
+	nul = malloc(sizeof(nul));
+	if (!nul)
+		exit(0);
+	nul[0] = '\0';
+	while (j < i)
+	{
+		sol[j] = ft_strjoin(cc[j], nul);
+		j++;
+	}
+	free(cc[j]);
+	free(cc);
+	sol[j] = ft_strjoin(c, nul);
+	sol[j + 1] = malloc(sizeof(sol));
+	sol[j + 1][0] = '\0';
+	free(nul);
+	return (sol);
+}
+
+t_input	*ft_data(char *argv)
+{
+	char	**input;
+	t_input	*data;
+
+	input = ft_readinput(argv);
+	data = malloc(sizeof(data));
+	if (!data)
+		exit(0);
+	data->map = ft_map(input);
+	data->row = ft_countrow(input);
+	data->column = ft_countcolum_line(input[0]);
 	data->a = 45 * (M_PI / 180);
 	data->b = -30 * (M_PI / 180);
-	fd = open(argv, O_RDONLY);
-	ft_exit(fd);
-	while (i < data->row)
+	data->zoom = 40;
+	data->zoom_z = 4;
+	ft_free_cc(input);
+	return (data);
+}
+
+int	**ft_map(char **input)
+{
+	int	i;
+	int	**map;
+	int	row;
+	int	column;
+
+	i = 0;
+	row = ft_countrow(input);
+	column = ft_countcolum_line(input[0]);
+	map = malloc(sizeof(map) * row);
+	if (!map)
+		exit(0);
+	while (i < row)
 	{
-		data->input[i] = get_next_line(fd);
-		data->map[i] = ft_calloc(data->column, sizeof(data->map));
+		map[i] = malloc(column * sizeof(map));
+		if (!map[i])
+			exit(0);
+		ft_data_alloc_line(input[i], map[i]);
 		i++;
 	}
-	close(fd);
-	return (data);
+	return (map);
 }
 
 void	ft_data_alloc_line(char *input, int *map)
@@ -84,24 +133,4 @@ void	ft_data_alloc_line(char *input, int *map)
 			a = 1;
 		input++;
 	}
-}
-
-t_input	*ft_data(char *argv)
-{
-	int		i;
-	t_input	*data;
-
-	i = 0;
-	data = malloc(sizeof(data, argv));
-	if (!data)
-		exit(0);
-	ft_data_create(data, argv);
-	while (i < data->row)
-	{
-		ft_data_alloc_line(data->input[i], data->map[i]);
-		i++;
-	}
-	data->zoom = ft_zoom(data);
-	data->zoom_z = ft_zoom_z(data);
-	return (data);
 }
