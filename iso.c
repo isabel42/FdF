@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/05/10 18:24:32 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/10 22:22:47 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_point	**ft_iso(t_input *data)
 
 	i = 0;
 	iso = malloc (sizeof(iso) * data->row);
-	printf("alpha: %f\n", data->a);
 	if (!iso)
 		exit(0);
 	while (i < data->row)
