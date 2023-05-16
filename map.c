@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/05/16 10:29:17 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/16 17:00:52 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int ft_countlines_input(char *argv)
 	while (line != NULL)
 	{
 		i++;
-		free(line);
+		// free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
@@ -52,12 +52,19 @@ char	**ft_readinput(char *argv)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
+		//sol[i] = ft_strcpy(line);
 		sol[i] = ft_strjoin(line, "\0");
 		line = get_next_line(fd);
 		i++;
 	}
 	sol[i] = NULL;
 	close (fd);
+	// int y = ft_countlines_input(argv) + 1;
+	// int aa = 0;
+	// while(aa < y){
+	// 	printf("%s",sol[aa]);
+	// 	aa++;
+	// }
 	return(sol);
 }
 
@@ -65,7 +72,7 @@ t_input	*ft_data(char **input)
 {
 	t_input	*data;
 
-	data = malloc(sizeof(data));
+	data = malloc(sizeof(*data));
 	if (!data)
 		exit(0);
 	data->map = ft_map(input);
@@ -73,8 +80,8 @@ t_input	*ft_data(char **input)
 	data->column = ft_countcolum_line(input[0]);
 	data->a = 45 * (M_PI / 180);
 	data->b = -30 * (M_PI / 180);
-	data->zoom = 5;
-	data->zoom_z = 2;
+	data->z = 40;
+	data->z_z = 2;
 	return (data);
 }
 
@@ -88,12 +95,12 @@ int	**ft_map(char **input)
 	i = 0;
 	row = ft_countrow(input);
 	column = ft_countcolum_line(input[0]);
-	map = malloc(sizeof(map) * row);
+	map = (int **)malloc(sizeof(*map) * row);
 	if (!map)
 		exit(0);
 	while (i < row)
 	{
-		map[i] = malloc(column * sizeof(map));
+		map[i] = (int*)malloc(column * sizeof(*map[i]));
 		if (!map[i])
 			exit(0);
 		ft_data_alloc_line(input[i], map[i]);

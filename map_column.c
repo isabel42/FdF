@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/05/15 12:08:44 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/16 15:41:53 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_countcolum_line(char *line)
 	i = 0;
 	a = 1;
 	j = 0;
-	while (line[i] != '\n')
+	while (line[i] != '\n' && line[i] != '\0')
 	{
 		if (line[i] > 47 && line[i] < 58 && a == 1)
 		{

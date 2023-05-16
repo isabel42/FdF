@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:09:38 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/05/15 15:41:20 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/16 16:40:56 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,4 @@ void	ft_free_iso(t_point **iso, t_input *data)
 		i++;
 	}
 	free(iso);
-}
-
-void	ft_free_input(char **s, int j)
-{
-	int	i;
-
-	i = 0;
-	while (i < j)
-	{
-		free(s[i]);
-		i++;
-	}
-	free(s);
 }

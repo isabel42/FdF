@@ -39,8 +39,8 @@ typedef struct s_input {
 	int		column;
 	float	a;
 	float	b;
-	int		zoom;
-	float	zoom_z;
+	int		z;
+	float	z_z;
 }				t_input;
 
 typedef struct s_point {
@@ -72,19 +72,18 @@ void		ft_free_cc(char **s);
 void		ft_free_ii(int **s, int j);
 void		ft_free_data(t_input *data);
 void		ft_free_iso(t_point **iso, t_input *data);
-void		ft_free_input(char **s, int j);
 
 t_point		**ft_iso(t_input *data);
 int			ft_is_min_x(t_point **iso, t_input *data);
 int			ft_is_max_x(t_point **iso, t_input *data);
-t_point		**ft_iso_pos(t_input *data);
+void		ft_iso_pos(t_point **iso, t_input *data);
 
 void		ft_exit(int fd);
 int			ft_countcolum_line(char *line);
 int			ft_countrow(char **input);
 
 char		**ft_readinput(char *argv);
-int ft_countlines_input(char *argv);
+int			ft_countlines_input(char *argv);
 t_input		*ft_data(char **input);
 int			**ft_map(char **input);
 void		ft_data_alloc_line(char *input, int *map);

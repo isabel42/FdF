@@ -27,7 +27,7 @@ INCLUDE = -I./libft/ -I./minilibx/ -I.
 			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}: 	${OBJS} ${FT_NAME} ${MLX_NAME}
-			${CC} ${CFLAGS} ${INCLUDE} ${OBJS} -o ${NAME} -L./minilibx/ -lmlx -L./libft/ -lft -framework OpenGL -framework AppKit -lm
+			${CC} ${CFLAGS} ${INCLUDE} ${OBJS} -o ${NAME} -L./minilibx/ -lmlx -L./libft/ -lft -framework OpenGL -framework AppKit -lm -g
 
 all:		${NAME}
 
