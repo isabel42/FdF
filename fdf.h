@@ -71,20 +71,21 @@ char		*ft_testret(char *line, int ret, char *buf, int limit);
 void		ft_free_cc(char **s);
 void		ft_free_ii(int **s, int j);
 void		ft_free_data(t_input *data);
+void		ft_free_iso(t_point **iso, t_input *data);
+void		ft_free_input(char **s, int j);
 
 t_point		**ft_iso(t_input *data);
-t_point		*ft_is_min(t_point **iso, t_input *data);
-t_point		*ft_is_max(t_point **iso, t_input *data);
+int			ft_is_min_x(t_point **iso, t_input *data);
+int			ft_is_max_x(t_point **iso, t_input *data);
 t_point		**ft_iso_pos(t_input *data);
 
 void		ft_exit(int fd);
-char		**ft_start_malloc();
 int			ft_countcolum_line(char *line);
 int			ft_countrow(char **input);
 
 char		**ft_readinput(char *argv);
-char		**ft_cc_c_join(char **cc, char *c, int i);
-t_input		*ft_data(char *argv);
+int ft_countlines_input(char *argv);
+t_input		*ft_data(char **input);
 int			**ft_map(char **input);
 void		ft_data_alloc_line(char *input, int *map);
 
