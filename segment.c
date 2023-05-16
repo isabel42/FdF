@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/23 03:37:22 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/16 21:30:33 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_bresen	*trace_segment_param(int x1, int y1, int x2, int y2)
 {
 	t_bresen	*param;
 
-	param = malloc(sizeof(param));
+	param = (t_bresen *)malloc(sizeof(*param));
 	if (!param)
 		exit(0);
 	if (y2 - y1 >= 0)
@@ -88,7 +88,7 @@ t_bresen_er	*ft_error(t_point one, t_point two)
 {
 	t_bresen_er	*error;
 
-	error = malloc(sizeof(error));
+	error = (t_bresen_er *)malloc(sizeof(*error));
 	if (!error)
 		exit(0);
 	error->avr = (2 * trace_segment_dy(one.x, one.y, two.x, two.y));

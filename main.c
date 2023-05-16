@@ -27,36 +27,17 @@ int	close_w(int keycode, t_vars *vars)
 	return (0);
 }
 
-void	ft_image_2(int x, int y, t_data_img img)
+void	ft_check_argc(int argc)
 {
-	// printf("iso 00.x: %d\n", iso[0][0].x);
-	my_mlx_pixel_put(&img, x, y, 0x0000FFFF);
-}
-
-void	ft_image_3(int row, int column, t_point **iso, t_data_img img)
-{
-	int			i;
-	int			j;
-
-	i = 0;
-	while (i < row && i < 1)
+	if (argc != 2)
 	{
-		j = 0;
-		while (j < column - 1)
-		{
-			tracer_segment(&img, iso[i][j], iso[i][j + 1]);
-			if (i < row - 1)
-				tracer_segment(&img, iso[i][j], iso[i + 1][j]);
-			if (j == column - 2 && i < row - 1)
-				tracer_segment(&img, iso[i][j + 1], iso[i + 1][j + 1]);
-			j++;
-		}
-		i++;
+		ft_putstr_fd("Incorrect number of aguments\n", 1);
+		exit (0);
 	}
 }
 
 void	ft_image(t_input *data, t_data_img img)
-{{
+{
 	t_point		**iso;
 	int			i;
 	int			j;
@@ -77,9 +58,8 @@ void	ft_image(t_input *data, t_data_img img)
 		}
 		i++;
 	}
+	ft_free_iso(iso, data);
 }
-}
-
 
 int	main(int argc, char **argv)
 {
@@ -87,39 +67,22 @@ int	main(int argc, char **argv)
 	t_data_img	img;
 	t_input		*data;
 	char		**input;
-	t_point		**iso;
 
-	if (argc != 2)
-	{
-		ft_putstr_fd("Incorrect number of aguments\n", 1);
-		return (0);
-	}
+	ft_check_argc(argc);
 	input = ft_readinput(argv[1]);
-	printf("\n");
 	data = ft_data(input);
-	/*
-	for (int i = 0; i < data->row; i++){
-		for (int y = 0; y < data->column; y++)
-		{
-			printf("%d  ", data->map[i][y]);
-		}
-		printf("\n");
-	}
-	*/
-	iso = ft_iso(data);
-			printf("row: %d\n", data->row);
-			printf("alpha: %f\n", data->a);
-			printf("beta: %f\n", data->b);
-			printf("iso.x: %d\n", iso[0][0].x);
-			printf("iso.y: %d\n", iso[0][0].y);
 	vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 1920, 1080, "FdF");
 	img.img = mlx_new_image(vars.mlx, 1920, 1080);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,
 			&img.line_length, &img.endian);
 	ft_image(data, img);
+	ft_free_cc(input);
+	ft_free_data(data);
 	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
 	mlx_hook(vars.win, 17, 0, close_w, &vars);
 	mlx_hook(vars.win, 2, 0, close_w, &vars);
 	mlx_loop(vars.mlx);
+	free(img.img);
+	return (0);
 }

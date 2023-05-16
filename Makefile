@@ -5,7 +5,7 @@ SRCS	= main.c \
 			get_next_line_utils.c \
 			get_next_line.c  \
 			segment.c \
-			tracer_segment.c
+			tracer_segment.c 
 
 OBJS 	= ${SRCS:.c=.o}
 
@@ -27,7 +27,7 @@ INCLUDE = -I./libft/ -I./minilibx/ -I.
 			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 ${NAME}: 	${OBJS} ${FT_NAME} ${MLX_NAME}
-			${CC} ${CFLAGS} ${INCLUDE} ${OBJS} -o ${NAME} -L./minilibx/ -lmlx -L./libft/ -lft -framework OpenGL -framework AppKit -lm -g
+			${CC} ${CFLAGS} ${INCLUDE} ${OBJS} -o ${NAME} -L./minilibx/ -lmlx -L./libft/ -lft -framework OpenGL -framework AppKit
 
 all:		${NAME}
 

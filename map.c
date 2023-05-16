@@ -6,19 +6,18 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/05/16 17:00:52 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/16 18:01:56 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-
-int ft_countlines_input(char *argv)
+int	ft_countlines_input(char *argv)
 {
 	int		fd;
 	int		i;
 	char	*line;
-	
+
 	i = 0;
 	fd = open(argv, O_RDONLY);
 	ft_exit(fd);
@@ -31,9 +30,10 @@ int ft_countlines_input(char *argv)
 	while (line != NULL)
 	{
 		i++;
-		// free(line);
+		free(line);
 		line = get_next_line(fd);
 	}
+	free(line);
 	close(fd);
 	return (i);
 }
@@ -52,20 +52,14 @@ char	**ft_readinput(char *argv)
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		//sol[i] = ft_strcpy(line);
 		sol[i] = ft_strjoin(line, "\0");
 		line = get_next_line(fd);
 		i++;
 	}
+	free(line);
 	sol[i] = NULL;
 	close (fd);
-	// int y = ft_countlines_input(argv) + 1;
-	// int aa = 0;
-	// while(aa < y){
-	// 	printf("%s",sol[aa]);
-	// 	aa++;
-	// }
-	return(sol);
+	return (sol);
 }
 
 t_input	*ft_data(char **input)
@@ -100,7 +94,7 @@ int	**ft_map(char **input)
 		exit(0);
 	while (i < row)
 	{
-		map[i] = (int*)malloc(column * sizeof(*map[i]));
+		map[i] = (int *)malloc(column * sizeof(*map[i]));
 		if (!map[i])
 			exit(0);
 		ft_data_alloc_line(input[i], map[i]);
