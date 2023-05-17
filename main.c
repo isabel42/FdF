@@ -49,6 +49,7 @@ void	ft_image(t_input *data, t_data_img img)
 		}
 		i++;
 	}
+	ft_free_iso(iso, data);
 }
 
 int	main(int argc, char **argv)
