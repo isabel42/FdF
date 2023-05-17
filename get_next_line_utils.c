@@ -6,18 +6,11 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:09:38 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/05/17 14:25:54 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/17 14:46:26 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-int	ft_abs(int a)
-{
-	if (a < 0)
-		return (-a);
-	return (a);
-}
 
 char	*ft_testret(char *line, int ret, char *buf, int limit)
 {
@@ -28,6 +21,13 @@ char	*ft_testret(char *line, int ret, char *buf, int limit)
 		return (NULL);
 	}
 	return (line);
+}
+
+int	ft_abs(int a)
+{
+	if (a < 0)
+		return (-a);
+	return (a);
 }
 
 void	ft_check_argc(int argc)
