@@ -12,13 +12,6 @@
 
 #include "fdf.h"
 
-int	ft_abs(int a)
-{
-	if (a < 0)
-		return (-a);
-	return (a);
-}
-
 int	close_w(int keycode, t_vars *vars)
 {
 	if (keycode == 53)
@@ -27,13 +20,11 @@ int	close_w(int keycode, t_vars *vars)
 	return (0);
 }
 
-void	ft_check_argc(int argc)
+int	key_exit(int keycode, t_vars *vars)
 {
-	if (argc != 2)
-	{
-		ft_putstr_fd("Incorrect number of aguments\n", 1);
-		exit (0);
-	}
+	if (keycode == 53)
+		close_w(keycode, vars);
+	return (0);
 }
 
 void	ft_image(t_input *data, t_data_img img)
@@ -58,7 +49,6 @@ void	ft_image(t_input *data, t_data_img img)
 		}
 		i++;
 	}
-	ft_free_iso(iso, data);
 }
 
 int	main(int argc, char **argv)
@@ -79,10 +69,9 @@ int	main(int argc, char **argv)
 	ft_image(data, img);
 	ft_free_cc(input);
 	ft_free_data(data);
-	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 0, 0);
+	mlx_put_image_to_window(vars.mlx, vars.win, img.img, 210, 150);
+	mlx_hook(vars.win, 2, 0, key_exit, &vars);
 	mlx_hook(vars.win, 17, 0, close_w, &vars);
-	mlx_hook(vars.win, 2, 0, close_w, &vars);
 	mlx_loop(vars.mlx);
-	free(img.img);
 	return (0);
 }

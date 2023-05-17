@@ -5,7 +5,9 @@ SRCS	= main.c \
 			get_next_line_utils.c \
 			get_next_line.c  \
 			segment.c \
-			tracer_segment.c 
+			tracer_segment.c \
+			zoom.c \
+			free.c
 
 OBJS 	= ${SRCS:.c=.o}
 

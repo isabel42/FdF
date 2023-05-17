@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 19:15:46 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/05/16 18:01:56 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/17 13:42:39 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ t_input	*ft_data(char **input)
 	data->column = ft_countcolum_line(input[0]);
 	data->a = 45 * (M_PI / 180);
 	data->b = -30 * (M_PI / 180);
-	data->z = 40;
-	data->z_z = 2;
+	data->z = ft_zoom (input);
+	data->z_z = ft_zoom_z(input);
 	return (data);
 }
 

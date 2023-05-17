@@ -6,89 +6,66 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/04/23 02:55:50 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/17 14:18:00 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-t_point	**ft_iso_single(t_input *data)
+float	ft_zoom(char **input)
 {
-	t_point	**iso;
-	int		i;
-	int		j;
+	t_point	size;
+	int		row;
+	int		column;
+	float	b;
+	float	zoom;
 
-	i = 0;
-	iso = malloc (sizeof(iso) * data->row);
-	if (!iso)
-		exit(0);
-	while (i < data->row)
-	{
-		iso[i] = malloc (sizeof(iso) * data->column);
-		if (!iso)
-			exit(0);
-		j = 0;
-		while (j < data->column)
-		{
-			iso[i][j].x = (j * cos(data->b) + i * sin(data->b));
-			iso[i][j].y = (-j * sin (data->a) * sin(data->b))
-				- 0 * data->map[i][j] * cos(data->a) + i
-				* sin(data->a) * cos(data->b);
-			j++;
-		}
-		i++;
-	}
-	return (iso);
-}
-
-float	ft_zoom(t_input *data)
-{
-	t_point	**iso_single;
-	t_point	*min;
-	t_point	*max;
-	t_point	*size;
-	int		zoom;
-
-	iso_single = ft_iso_single(data);
-	min = ft_is_min(iso_single, data);
-	max = ft_is_max(iso_single, data);
-	size = malloc(sizeof(size) * 1);
-	if (!size)
-		exit(0);
-	size->x = ft_abs(max->x - min->x);
-	size->y = ft_abs(max->y - min->y);
-	zoom = 1500 / size->x;
-	if (zoom > 900 / size->y)
-		zoom = 900 / size->y;
-	if (zoom > 40)
-		zoom = 40;
-	free(min);
-	free(max);
-	free(size);
-	free(iso_single);
+	row = ft_countrow(input);
+	column = ft_countcolum_line(input[0]);
+	b = -30 * (M_PI / 180);
+	size.x = ft_abs(column * cos(b)) + ft_abs(row * cos(90 * (M_PI / 180) + b));
+	size.y = ft_abs(column * sin(b)) + ft_abs(row * sin(90 * (M_PI / 180) + b));
+	zoom = 1710.0 / size.x;
+	if (zoom > 930.0 / size.y)
+		zoom = 930.0 / size.y;
 	return (zoom);
 }
 
-float	ft_zoom_z(t_input *data)
+int	ft_is_max_map(int row, int column, int **map)
 {
-	int	i;
-	int	j;
-	int	max;
+	int		i;
+	int		j;
+	int		max_map;
 
 	i = 0;
-	max = 0;
-	while (i < data->row)
+	max_map = 0;
+	while (i < row)
 	{
 		j = 0;
-		while (j < data->column)
+		while (j < column)
 		{
-			if (ft_abs(data->map[i][j]) > max)
-				max = ft_abs(data->map[i][j]);
+			if (ft_abs(map[i][j]) > max_map)
+				max_map = ft_abs(map[i][j]);
 			j++;
 		}
 		i++;
 	}
-	if (max == 0)
-		return (0);
-	return (40.0 / max);
+	return (max_map);
+}
+
+float	ft_zoom_z(char **input)
+{
+	int		max_map;
+	int		**map;
+	int		row;
+	int		column;
+
+	map = ft_map(input);
+	row = ft_countrow(input);
+	column = ft_countcolum_line(input[0]);
+	max_map = ft_is_max_map(row, column, map);
+	ft_free_ii(map, row);
+	if (max_map == 0)
+		return (1);
+	return (50.0 / max_map);
 }

@@ -6,7 +6,7 @@
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/29 20:14:31 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/05/16 17:02:21 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/17 13:28:57 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,27 +83,6 @@ int	ft_is_min_y(t_point **iso, t_input *data)
 		i++;
 	}
 	return (min_y);
-}
-
-int	ft_is_max_x(t_point **iso, t_input *data)
-{
-	int		i;
-	int		j;
-	int		max_x;
-
-	i = 0;
-	while (i < data->row)
-	{
-		j = 0;
-		while (j < data->column)
-		{
-			if (iso[i][j].x > max_x)
-				max_x = iso[i][j].x;
-			j++;
-		}
-		i++;
-	}
-	return (max_x);
 }
 
 void	ft_iso_pos(t_point **iso, t_input *data)

@@ -1,40 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: itovar-n <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 18:09:38 by itovar-n          #+#    #+#             */
-/*   Updated: 2023/05/17 14:25:54 by itovar-n         ###   ########.fr       */
+/*   Updated: 2023/05/17 14:28:52 by itovar-n         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-int	ft_abs(int a)
+void	ft_free_cc(char **s)
 {
-	if (a < 0)
-		return (-a);
-	return (a);
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		free(s[i]);
+		i++;
+	}
+	free(s);
 }
 
-char	*ft_testret(char *line, int ret, char *buf, int limit)
+void	ft_free_ii(int **s, int j)
 {
-	if (ret < limit)
+	int	i;
+
+	i = 0;
+	while (i < j)
 	{
-		buf[0] = '\0';
-		free(line);
-		return (NULL);
+		free(s[i]);
+		i++;
 	}
-	return (line);
+	free(s);
 }
 
-void	ft_check_argc(int argc)
+void	ft_free_data(t_input *data)
 {
-	if (argc != 2)
+	ft_free_ii(data->map, data->row);
+	free(data);
+}
+
+void	ft_free_iso(t_point **iso, t_input *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->row)
 	{
-		ft_putstr_fd("Incorrect number of aguments\n", 1);
-		exit (0);
+		free(iso[i]);
+		i++;
 	}
+	free(iso);
 }

@@ -39,7 +39,7 @@ typedef struct s_input {
 	int		column;
 	float	a;
 	float	b;
-	int		z;
+	float	z;
 	float	z_z;
 }				t_input;
 
@@ -68,6 +68,9 @@ char		*ft_loopbuf(int looprep, char *buf);
 char		*get_next_line(int fd);
 
 char		*ft_testret(char *line, int ret, char *buf, int limit);
+int			ft_abs(int a);
+void		ft_check_argc(int argc);
+
 void		ft_free_cc(char **s);
 void		ft_free_ii(int **s, int j);
 void		ft_free_data(t_input *data);
@@ -96,12 +99,12 @@ t_bresen_er	*ft_error(t_point one, t_point two);
 
 void		tracer_segment(t_data_img *img, t_point one, t_point two);
 
-int			ft_abs(int a);
 int			close_w(int keycode, t_vars *vars);
+int			key_exit(int keycode, t_vars *vars);
 void		ft_image(t_input *data, t_data_img img);
 
-t_point		**ft_iso_single(t_input *data);
-float		ft_zoom(t_input *data);
-float		ft_zoom_z(t_input *data);
+float		ft_zoom(char **input);
+int			ft_is_max_map(int row, int column, int **map);
+float		ft_zoom_z(char **input);
 
 #endif
